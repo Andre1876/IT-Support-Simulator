@@ -107,3 +107,141 @@
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Support Technician Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e8f5fe;
+        }
+        .office-container {
+            width: 500px;
+            height: 400px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .technician {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 100px;
+            background-color: #4CAF50;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            animation: bounce 1.5s infinite;
+        }
+        .technician::before {
+            content: '';
+            width: 30px;
+            height: 30px;
+            background-color: #333;
+            border-radius: 50%;
+            position: absolute;
+            top: -30px;
+        }
+        .desk {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 50px;
+            background-color: #b0bec5;
+        }
+        .computer {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 30px;
+            background-color: #607d8b;
+        }
+        .screen {
+            position: absolute;
+            top: 3px;
+            left: 5px;
+            width: 30px;
+            height: 20px;
+            background-color: #333;
+            color: #76ff03;
+            font-size: 12px;
+            font-family: monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="office-container">
+    <div class="technician"></div>
+    <div class="desk">
+        <div class="computer">
+            <div class="screen" id="screen">Loading...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Typing effect for "screen" text
+    const screen = document.getElementById('screen');
+    const messages = [
+        "Loading system...",
+        "Connecting to client...",
+        "Checking VPN...",
+        "Resetting password...",
+        "Issue resolved!"
+    ];
+    let messageIndex = 0;
+    let charIndex = 0;
+
+    function typeMessage() {
+        if (charIndex < messages[messageIndex].length) {
+            screen.textContent += messages[messageIndex][charIndex];
+            charIndex++;
+            setTimeout(typeMessage, 100);
+        } else {
+            setTimeout(nextMessage, 1000);
+        }
+    }
+
+    function nextMessage() {
+        screen.textContent = "";
+        charIndex = 0;
+        messageIndex = (messageIndex + 1) % messages.length;
+        typeMessage();
+    }
+
+    typeMessage();  // Start typing effect
+</script>
+
+</body>
+</html>
