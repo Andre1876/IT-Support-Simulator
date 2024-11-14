@@ -1,138 +1,138 @@
 # IT-Support-Technician-Animation
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Support Technician Animation</title>
+    <title>IT Support Animation</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
             background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
 
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            position: relative;
+        }
+
         .desk {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            background-color: #cfcfcf;
+            width: 300px;
+            height: 200px;
             position: relative;
-            text-align: center;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .technician {
-            margin-bottom: 20px;
-        }
-
-        .computer {
-            position: relative;
-        }
-
-        .computer img {
-            width: 200px;
-        }
-
-        .ticket {
+        .desk-top {
+            width: 100%;
+            height: 40px;
+            background-color: #4c4c4c;
             position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 10px;
-            display: none;
+            top: 0;
         }
 
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
+        .person {
+            position: absolute;
+            bottom: 30px;
+            left: 50px;
+            width: 50px;
+            height: 100px;
+            z-index: 1;
+        }
+
+        .head {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #f9d5a7;
+            margin: 0 auto;
+        }
+
+        .body {
+            width: 50px;
+            height: 60px;
+            background-color: #6a9fb5;
+            margin: 5px auto;
+        }
+
+        .arms {
+            width: 70px;
+            height: 10px;
+            background-color: #e4a84e;
+            position: absolute;
+            left: -10px;
+            bottom: 20px;
+        }
+
+        .legs {
+            width: 50px;
+            height: 10px;
+            background-color: #4d7f9e;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        .computer-screen {
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            width: 60px;
+            height: 40px;
+            background-color: #333;
             border-radius: 5px;
+            z-index: 2;
         }
 
-        button:hover {
-            background-color: #45a049;
+        .animation {
+            animation: moveArms 2s infinite;
         }
+
+        @keyframes moveArms {
+            0% {
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(20deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
     </style>
 </head>
 <body>
-
     <div class="container">
         <div class="desk">
-            <div class="technician">
-                <img src="assets/technician.png" alt="IT Technician">
+            <div class="desk-top"></div>
+            <div class="person">
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="arms animation"></div>
+                <div class="legs"></div>
             </div>
-            <div class="computer">
-                <img src="assets/computer-screen.png" alt="Computer Screen">
-                <div class="ticket" id="supportTicket">
-                    <p>Support Ticket: Issue Detected!</p>
-                    <button id="closeTicket">Close</button>
-                </div>
-            </div>
+            <div class="computer-screen"></div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.1/gsap.min.js"></script>
     <script>
-        // Wait for the page to load
-        window.onload = function () {
-            // Animate technician typing at the desk
-            gsap.from(".technician", {
-                duration: 1.5,
-                opacity: 0,
-                y: -50,
-                ease: "power3.out"
-            });
-
-            // Function to trigger the ticket pop-up animation
-            document.querySelector(".computer").addEventListener("click", function() {
-                // Show the support ticket
-                const ticket = document.getElementById("supportTicket");
-                ticket.style.display = 'block';
-
-                // Animate the ticket popping up
-                gsap.fromTo(ticket, 
-                    { opacity: 0, y: -20 }, 
-                    { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
-                );
-
-                // Animate technician's typing action
-                gsap.to(".technician img", {
-                    rotation: 5,
-                    duration: 1,
-                    repeat: 3,
-                    yoyo: true,
-                    ease: "power2.inOut"
-                });
-            });
-
-            // Close ticket when button is clicked
-            document.getElementById("closeTicket").addEventListener("click", function () {
-                const ticket = document.getElementById("supportTicket");
-                gsap.to(ticket, { opacity: 0, y: -20, duration: 0.5, ease: "power2.in" });
-
-                setTimeout(function () {
-                    ticket.style.display = 'none';
-                }, 500);
-            });
-        };
+        // Add interactivity or animation
+        document.querySelector('.person').addEventListener('click', function() {
+            alert("IT Support is working on a ticket!");
+        });
     </script>
-
 </body>
 </html>
