@@ -1,139 +1,6 @@
 # IT-Support-Technician-Animation
 
 
-
-
-
-
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Support Simulator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f5f5f5;
-        }
-        .simulator-container {
-            width: 400px;
-            padding: 20px;
-            background-color: #ffffff;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-        }
-        h1 {
-            font-size: 24px;
-            color: #333;
-        }
-        .issue {
-            font-size: 18px;
-            color: #444;
-            margin: 20px 0;
-        }
-        .options {
-            display: flex;
-            flex-direction: column;
-        }
-        .option {
-            margin: 8px 0;
-            padding: 10px;
-            background-color: #e0e0e0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .option:hover {
-            background-color: #cfd8dc;
-        }
-        .feedback {
-            font-size: 16px;
-            color: #28a745;
-            margin-top: 20px;
-        }
-    </style>
-</head>
-<body>
-
-<div class="simulator-container">
-    <h1>IT Support Simulator</h1>
-    <div class="issue" id="issue">Loading issue...</div>
-    <div class="options" id="options"></div>
-    <div class="feedback" id="feedback"></div>
-</div>
-
-<script>
-    const issues = [
-        {
-            issue: "User cannot connect to Wi-Fi.",
-            options: [
-                { text: "Check if airplane mode is enabled.", correct: true },
-                { text: "Restart the computer.", correct: false },
-                { text: "Tell the user to use a wired connection instead.", correct: false }
-            ]
-        },
-        {
-            issue: "Printer is not responding.",
-            options: [
-                { text: "Ensure the printer is turned on.", correct: true },
-                { text: "Tell the user to print it later.", correct: false },
-                { text: "Check if the toner needs to be replaced.", correct: false }
-            ]
-        },
-        {
-            issue: "User forgot their password.",
-            options: [
-                { text: "Reset the password through the IT portal.", correct: true },
-                { text: "Tell them to remember it next time.", correct: false },
-                { text: "Send them a tutorial on creating strong passwords.", correct: false }
-            ]
-        }
-    ];
-
-    let currentIssue = 0;
-
-    function loadIssue() {
-        const issueDisplay = document.getElementById("issue");
-        const optionsDisplay = document.getElementById("options");
-        const feedbackDisplay = document.getElementById("feedback");
-
-        feedbackDisplay.innerHTML = ""; // Clear feedback
-        const issue = issues[currentIssue];
-        issueDisplay.innerText = issue.issue;
-        optionsDisplay.innerHTML = ""; // Clear previous options
-
-        issue.options.forEach((option, index) => {
-            const optionDiv = document.createElement("div");
-            optionDiv.className = "option";
-            optionDiv.innerText = option.text;
-            optionDiv.onclick = () => checkAnswer(option.correct);
-            optionsDisplay.appendChild(optionDiv);
-        });
-    }
-
-    function checkAnswer(correct) {
-        const feedbackDisplay = document.getElementById("feedback");
-        if (correct) {
-            feedbackDisplay.innerText = "Correct! Issue resolved.";
-            currentIssue = (currentIssue + 1) % issues.length; // Move to the next issue
-            setTimeout(loadIssue, 2000); // Load next issue after a delay
-        } else {
-            feedbackDisplay.innerText = "Incorrect, try again!";
-        }
-    }
-
-    loadIssue(); // Load the first issue when the page loads
-</script>
-
-</body>
-</html>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -375,6 +242,137 @@
     }
 
     typeMessage();  // Start typing effect
+</script>
+
+</body>
+</html>
+
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Support Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+        .simulator-container {
+            width: 400px;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+        .issue {
+            font-size: 18px;
+            color: #444;
+            margin: 20px 0;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        .option {
+            margin: 8px 0;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option:hover {
+            background-color: #cfd8dc;
+        }
+        .feedback {
+            font-size: 16px;
+            color: #28a745;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="simulator-container">
+    <h1>IT Support Simulator</h1>
+    <div class="issue" id="issue">Loading issue...</div>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback"></div>
+</div>
+
+<script>
+    const issues = [
+        {
+            issue: "User cannot connect to Wi-Fi.",
+            options: [
+                { text: "Check if airplane mode is enabled.", correct: true },
+                { text: "Restart the computer.", correct: false },
+                { text: "Tell the user to use a wired connection instead.", correct: false }
+            ]
+        },
+        {
+            issue: "Printer is not responding.",
+            options: [
+                { text: "Ensure the printer is turned on.", correct: true },
+                { text: "Tell the user to print it later.", correct: false },
+                { text: "Check if the toner needs to be replaced.", correct: false }
+            ]
+        },
+        {
+            issue: "User forgot their password.",
+            options: [
+                { text: "Reset the password through the IT portal.", correct: true },
+                { text: "Tell them to remember it next time.", correct: false },
+                { text: "Send them a tutorial on creating strong passwords.", correct: false }
+            ]
+        }
+    ];
+
+    let currentIssue = 0;
+
+    function loadIssue() {
+        const issueDisplay = document.getElementById("issue");
+        const optionsDisplay = document.getElementById("options");
+        const feedbackDisplay = document.getElementById("feedback");
+
+        feedbackDisplay.innerHTML = ""; // Clear feedback
+        const issue = issues[currentIssue];
+        issueDisplay.innerText = issue.issue;
+        optionsDisplay.innerHTML = ""; // Clear previous options
+
+        issue.options.forEach((option, index) => {
+            const optionDiv = document.createElement("div");
+            optionDiv.className = "option";
+            optionDiv.innerText = option.text;
+            optionDiv.onclick = () => checkAnswer(option.correct);
+            optionsDisplay.appendChild(optionDiv);
+        });
+    }
+
+    function checkAnswer(correct) {
+        const feedbackDisplay = document.getElementById("feedback");
+        if (correct) {
+            feedbackDisplay.innerText = "Correct! Issue resolved.";
+            currentIssue = (currentIssue + 1) % issues.length; // Move to the next issue
+            setTimeout(loadIssue, 2000); // Load next issue after a delay
+        } else {
+            feedbackDisplay.innerText = "Incorrect, try again!";
+        }
+    }
+
+    loadIssue(); // Load the first issue when the page loads
 </script>
 
 </body>
