@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive IT Support Desk</title>
+    <title>IT Support Simulator</title>
     <style>
         body {
             display: flex;
@@ -14,138 +14,94 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #e8f4f8;
+            background-color: #f4f8fb;
         }
-
-        .office {
-            position: relative;
+        .app-container {
             width: 400px;
-            height: 300px;
-            background-color: #b0d4f1;
+            padding: 20px;
+            background-color: #ffffff;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-
-        .desk {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            height: 40px;
-            background-color: #646f8d;
-        }
-
-        .computer {
-            position: absolute;
-            top: 20px;
-            left: 130px;
-            width: 120px;
-            height: 80px;
-            background-color: #2f3d5e;
-            border-radius: 5px;
-        }
-
-        .screen {
-            width: 90%;
-            height: 60%;
-            background-color: #1c293f;
-            margin: 10px auto;
-            border-radius: 3px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #a4cdf7;
-            animation: typing 3s infinite;
-        }
-
-        @keyframes typing {
-            0%, 100% { content: 'Typing...'; }
-            50% { content: 'Working on tickets...'; }
-        }
-
-        .chair {
-            position: absolute;
-            bottom: 0;
-            left: 90px;
-            width: 60px;
-            height: 40px;
-            background-color: #5b6b82;
-            border-radius: 5px 5px 0 0;
-        }
-
-        .requests {
-            position: absolute;
-            top: 130px;
-            right: 20px;
-            width: 80px;
-            padding: 10px;
-            background-color: #4b6584;
-            border-radius: 5px;
-            cursor: pointer;
-            color: #fff;
             text-align: center;
-            font-size: 14px;
-            transition: 0.3s ease;
         }
-
-        .requests:hover {
-            background-color: #2d4059;
-        }
-
-        .popup {
-            position: absolute;
-            bottom: 70px;
-            right: 0;
-            width: 200px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
-            font-size: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none;
-        }
-
-        .close {
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            cursor: pointer;
-            color: #888;
+        .header {
+            font-size: 24px;
             font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
         }
-
+        .task {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+            font-size: 18px;
+            color: #333;
+        }
+        .options {
+            margin-top: 15px;
+        }
+        .option-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .option-button:hover {
+            background-color: #45a049;
+        }
+        .status {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
 
-    <div class="office">
-        <div class="computer">
-            <div class="screen">Typing...</div>
+    <div class="app-container">
+        <div class="header">IT Support Simulator</div>
+        <div class="task" id="task">Welcome! Click "Next Request" to begin helping clients.</div>
+        <div class="options">
+            <button class="option-button" onclick="handleOption('fix')">Fix the Issue</button>
+            <button class="option-button" onclick="handleOption('ask')">Ask More Details</button>
+            <button class="option-button" onclick="handleOption('escalate')">Escalate to Supervisor</button>
         </div>
-        <div class="desk"></div>
-        <div class="chair"></div>
-        <div class="requests" onclick="showPopup()">Client Request</div>
-        <div class="popup" id="popup">
-            <span class="close" onclick="closePopup()">&times;</span>
-            <p><strong>Client:</strong> “I’m unable to connect to the VPN. Can you help me out?”</p>
-            <button onclick="respondToClient()">Respond</button>
-        </div>
+        <button class="option-button" onclick="nextRequest()">Next Request</button>
+        <div class="status" id="status">Status: Waiting for next request...</div>
     </div>
 
     <script>
-        function showPopup() {
-            document.getElementById('popup').style.display = 'block';
+        const requests = [
+            { problem: "Cannot connect to VPN", fixResponse: "VPN reconnected!", askResponse: "Please check network settings.", escalateResponse: "Escalated to Network Team." },
+            { problem: "Forgot email password", fixResponse: "Password reset successfully!", askResponse: "Is this a work or personal email?", escalateResponse: "Escalated to IT Security." },
+            { problem: "Computer is too slow", fixResponse: "Ran system cleanup, speed improved!", askResponse: "Are you running multiple applications?", escalateResponse: "Escalated to Desktop Support." },
+        ];
+
+        let currentRequest = -1;
+
+        function nextRequest() {
+            currentRequest = (currentRequest + 1) % requests.length;
+            document.getElementById('task').innerText = `Client Issue: ${requests[currentRequest].problem}`;
+            document.getElementById('status').innerText = "Status: New request received.";
         }
 
-        function closePopup() {
-            document.getElementById('popup').style.display = 'none';
-        }
-
-        function respondToClient() {
-            alert("Response Sent: 'Hello! I'm looking into the VPN issue now.'");
-            closePopup();
+        function handleOption(option) {
+            let response;
+            if (option === 'fix') {
+                response = requests[currentRequest].fixResponse;
+            } else if (option === 'ask') {
+                response = requests[currentRequest].askResponse;
+            } else if (option === 'escalate') {
+                response = requests[currentRequest].escalateResponse;
+            }
+            document.getElementById('status').innerText = `Status: ${response}`;
         }
     </script>
 
