@@ -3,163 +3,133 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full-Screen IT Support Simulator</title>
+    <title>IT Support Simulator</title>
     <style>
-        /* Full-screen styling */
-        body, html {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #e0f7fa;
+        /* Basic styling for the page */
+        body {
             font-family: Arial, sans-serif;
-        }
-
-        .simulator-container {
-            width: 80%;
-            height: 80%;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
-            overflow: hidden;
-            text-align: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
         }
 
         h1 {
-            font-size: 32px;
-            margin: 20px 0;
-        }
-
-        .issue {
-            font-size: 22px;
             color: #333;
-            margin: 20px 0;
-            height: 60px;
+            margin-bottom: 20px;
         }
 
-        .options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+        #question-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
             width: 80%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        .option {
-            background-color: #e0e0e0;
-            padding: 15px;
-            border-radius: 5px;
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 18px;
+            font-size: 16px;
         }
 
-        .option:hover {
-            background-color: #b3e5fc;
+        button:hover {
+            background-color: #0056b3;
         }
 
-        .feedback {
-            font-size: 20px;
-            color: #388e3c;
-            margin-top: 20px;
+        .option-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
         }
 
-        .score, .progress {
-            font-size: 20px;
-            color: #00796b;
-            margin: 10px;
+        .option-button:hover {
+            background-color: #218838;
         }
     </style>
 </head>
 <body>
-
-<div class="simulator-container">
     <h1>IT Support Simulator</h1>
-    <div class="progress" id="progress">Progress: 0%</div>
-    <div class="score" id="score">Score: 0</div>
-    <div class="issue" id="issue">Loading issue...</div>
-    <div class="options" id="options"></div>
-    <div class="feedback" id="feedback"></div>
-</div>
+    <div id="question-container">
+        <!-- Question and answer options will appear here -->
+    </div>
+    <button onclick="loadRandomIssue()">Next Issue</button>
 
-<script>
-    // Sample issue data (extend this with 100s of issues)
-    const issues = [
-        {
-            issue: "User cannot access their email account.",
-            options: [
-                { text: "Reset the user’s password.", correct: true },
-                { text: "Tell them to contact their ISP.", correct: false },
-                { text: "Ask them to restart their computer.", correct: false },
-                { text: "Suggest using a different browser.", correct: false }
-            ],
-            explanation: "Resetting the password is the most common solution for account access issues."
-        },
-        {
-            issue: "Computer is running slowly.",
-            options: [
-                { text: "Run a virus scan.", correct: true },
-                { text: "Tell the user to buy a new computer.", correct: false },
-                { text: "Suggest they close all applications.", correct: false },
-                { text: "Recommend they add more RAM.", correct: false }
-            ],
-            explanation: "A virus scan can detect malicious software causing slow performance."
-        },
-        // Add more issues here...
-    ];
+    <script>
+        // JSON data embedded directly with a few sample questions
+        const issues = [
+            {
+                "issue": "The user's computer won't turn on.",
+                "options": [
+                    { "text": "Check the power cable and connection.", "correct": true },
+                    { "text": "Restart the router.", "correct": false },
+                    { "text": "Check for software updates.", "correct": false },
+                    { "text": "Clear the browser cache.", "correct": false }
+                ],
+                "explanation": "Checking the power cable and connection is the first step for diagnosing a hardware power issue."
+            },
+            {
+                "issue": "User reports that their internet connection is slow.",
+                "options": [
+                    { "text": "Restart the router and modem.", "correct": true },
+                    { "text": "Clear the browser cache.", "correct": false },
+                    { "text": "Install a new antivirus program.", "correct": false },
+                    { "text": "Reinstall the operating system.", "correct": false }
+                ],
+                "explanation": "Restarting the router and modem can help refresh the internet connection and improve speed."
+            },
+            {
+                "issue": "The printer is not responding to print commands.",
+                "options": [
+                    { "text": "Check if the printer is powered on and connected.", "correct": true },
+                    { "text": "Close all applications and restart the computer.", "correct": false },
+                    { "text": "Run a virus scan.", "correct": false },
+                    { "text": "Check email settings.", "correct": false }
+                ],
+                "explanation": "Ensuring the printer is powered on and connected is the first step in troubleshooting printer issues."
+            },
+            // Add more questions in this format
+        ];
 
-    let currentIssueIndex = 0;
-    let score = 0;
-
-    function loadIssue() {
-        const issueElement = document.getElementById("issue");
-        const optionsElement = document.getElementById("options");
-        const feedbackElement = document.getElementById("feedback");
-        const scoreElement = document.getElementById("score");
-        const progressElement = document.getElementById("progress");
-
-        feedbackElement.innerText = ""; // Clear feedback
-
-        // Load current issue
-        const issue = issues[currentIssueIndex];
-        issueElement.innerText = issue.issue;
-        optionsElement.innerHTML = ""; // Clear previous options
-
-        // Display answer options
-        issue.options.forEach(option => {
-            const optionDiv = document.createElement("div");
-            optionDiv.className = "option";
-            optionDiv.innerText = option.text;
-            optionDiv.onclick = () => checkAnswer(option.correct, issue.explanation);
-            optionsElement.appendChild(optionDiv);
-        });
-
-        // Update progress
-        progressElement.innerText = `Progress: ${Math.floor((currentIssueIndex / issues.length) * 100)}%`;
-        scoreElement.innerText = `Score: ${score}`;
-    }
-
-    function checkAnswer(correct, explanation) {
-        const feedbackElement = document.getElementById("feedback");
-        if (correct) {
-            feedbackElement.innerText = "Correct! " + explanation;
-            score++;
-        } else {
-            feedbackElement.innerText = "Incorrect. " + explanation;
+        function loadRandomIssue() {
+            // Pick a random issue from the list
+            const randomIndex = Math.floor(Math.random() * issues.length);
+            const issue = issues[randomIndex];
+            
+            // Display the issue and options
+            const container = document.getElementById("question-container");
+            container.innerHTML = `<h2>${issue.issue}</h2>`;
+            issue.options.forEach((option, index) => {
+                container.innerHTML += `<button class="option-button" onclick="checkAnswer(${randomIndex}, ${index})">${option.text}</button>`;
+            });
         }
 
-        // Move to the next issue after delay
-        currentIssueIndex = (currentIssueIndex + 1) % issues.length;
-        setTimeout(loadIssue, 3000); // Load next issue after delay
-    }
+        function checkAnswer(issueIndex, optionIndex) {
+            const selectedOption = issues[issueIndex].options[optionIndex];
+            const explanation = selectedOption.correct ? "Correct! " + issues[issueIndex].explanation : "Incorrect. " + issues[issueIndex].explanation;
+            alert(explanation);
+        }
 
-    // Initialize the first issue
-    loadIssue();
-</script>
-
+        // Load a random issue on page load
+        loadRandomIssue();
+    </script>
 </body>
 </html>
