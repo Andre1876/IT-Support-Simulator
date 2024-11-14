@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!-DOCTYPE html-> 
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Support Simulator</title>
+    <title></title>
     <style>
         /* Basic styling for the page */
         body {
