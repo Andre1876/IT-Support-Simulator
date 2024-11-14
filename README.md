@@ -5,134 +5,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT Support Animation</title>
+    <title>Interactive IT Support Desk</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e8f4f8;
         }
 
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
+        .office {
             position: relative;
-        }
-
-        .desk {
-            background-color: #cfcfcf;
-            width: 300px;
-            height: 200px;
-            position: relative;
+            width: 400px;
+            height: 300px;
+            background-color: #b0d4f1;
             border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
 
-        .desk-top {
+        .desk {
+            position: absolute;
+            bottom: 20px;
             width: 100%;
             height: 40px;
-            background-color: #4c4c4c;
+            background-color: #646f8d;
+        }
+
+        .computer {
             position: absolute;
-            top: 0;
+            top: 20px;
+            left: 130px;
+            width: 120px;
+            height: 80px;
+            background-color: #2f3d5e;
+            border-radius: 5px;
         }
 
-        .person {
+        .screen {
+            width: 90%;
+            height: 60%;
+            background-color: #1c293f;
+            margin: 10px auto;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #a4cdf7;
+            animation: typing 3s infinite;
+        }
+
+        @keyframes typing {
+            0%, 100% { content: 'Typing...'; }
+            50% { content: 'Working on tickets...'; }
+        }
+
+        .chair {
             position: absolute;
-            bottom: 30px;
-            left: 50px;
-            width: 50px;
-            height: 100px;
-            z-index: 1;
-        }
-
-        .head {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #f9d5a7;
-            margin: 0 auto;
-        }
-
-        .body {
-            width: 50px;
-            height: 60px;
-            background-color: #6a9fb5;
-            margin: 5px auto;
-        }
-
-        .arms {
-            width: 70px;
-            height: 10px;
-            background-color: #e4a84e;
-            position: absolute;
-            left: -10px;
-            bottom: 20px;
-        }
-
-        .legs {
-            width: 50px;
-            height: 10px;
-            background-color: #4d7f9e;
-            position: absolute;
-            left: 0;
             bottom: 0;
-        }
-
-        .computer-screen {
-            position: absolute;
-            top: 10px;
-            left: 20px;
+            left: 90px;
             width: 60px;
             height: 40px;
-            background-color: #333;
+            background-color: #5b6b82;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .requests {
+            position: absolute;
+            top: 130px;
+            right: 20px;
+            width: 80px;
+            padding: 10px;
+            background-color: #4b6584;
             border-radius: 5px;
-            z-index: 2;
+            cursor: pointer;
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+            transition: 0.3s ease;
         }
 
-        .animation {
-            animation: moveArms 2s infinite;
+        .requests:hover {
+            background-color: #2d4059;
         }
 
-        @keyframes moveArms {
-            0% {
-                transform: rotate(0deg);
-            }
-            50% {
-                transform: rotate(20deg);
-            }
-            100% {
-                transform: rotate(0deg);
-            }
+        .popup {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 200px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            color: #888;
+            font-weight: bold;
         }
 
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="desk">
-            <div class="desk-top"></div>
-            <div class="person">
-                <div class="head"></div>
-                <div class="body"></div>
-                <div class="arms animation"></div>
-                <div class="legs"></div>
-            </div>
-            <div class="computer-screen"></div>
+
+    <div class="office">
+        <div class="computer">
+            <div class="screen">Typing...</div>
+        </div>
+        <div class="desk"></div>
+        <div class="chair"></div>
+        <div class="requests" onclick="showPopup()">Client Request</div>
+        <div class="popup" id="popup">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <p><strong>Client:</strong> “I’m unable to connect to the VPN. Can you help me out?”</p>
+            <button onclick="respondToClient()">Respond</button>
         </div>
     </div>
 
     <script>
-        // Add interactivity or animation
-        document.querySelector('.person').addEventListener('click', function() {
-            alert("IT Support is working on a ticket!");
-        });
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function respondToClient() {
+            alert("Response Sent: 'Hello! I'm looking into the VPN issue now.'");
+            closePopup();
+        }
     </script>
+
 </body>
 </html>
