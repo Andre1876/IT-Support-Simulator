@@ -1,4 +1,4 @@
-<!-DOCTYPE html-> 
+<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -68,7 +68,7 @@
     </style>
 </head>
 <body>
-    <h1>IT Support Simulator</h1>
+    <h1></h1>
     <div id="question-container">
         <!-- Question and answer options will appear here -->
     </div>
